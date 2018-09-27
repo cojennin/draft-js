@@ -20,6 +20,8 @@ import React from 'react';
 class KatexOutput extends React.Component {
   constructor(props) {
     super(props);
+
+    this.setDomContainerRef = ref => this.domContainer = ref;
     this._timer = null;
   }
 
@@ -31,7 +33,7 @@ class KatexOutput extends React.Component {
     this._timer = setTimeout(() => {
       katex.render(
         this.props.content,
-        this.refs.container,
+        this.domContainer,
         {displayMode: true},
       );
     }, 0);
@@ -53,13 +55,14 @@ class KatexOutput extends React.Component {
   }
 
   render() {
-    return <div ref="container" onClick={this.props.onClick} />;
+    return <div ref={this.setDomContainerRef} onClick={this.props.onClick} />;
   }
 }
 
 export default class TeXBlock extends React.Component {
   constructor(props) {
     super(props);
+    this.setDomTextAreaRef = ref => this.domTextArea = ref;
     this.state = {editMode: false};
 
     this._onClick = () => {
@@ -152,7 +155,7 @@ export default class TeXBlock extends React.Component {
           <textarea
             className="TeXEditor-texValue"
             onChange={this._onValueChange}
-            ref="textarea"
+            ref={this.setDomTextAreaRef}
             value={this.state.texValue}
           />
           <div className="TeXEditor-buttons">

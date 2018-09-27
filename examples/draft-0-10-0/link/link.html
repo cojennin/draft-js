@@ -41,6 +41,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         constructor(props) {
           super(props);
 
+          this.setDomEditorRef = ref => this.domEditor = ref;
+          this.setDomUrlRef = ref => this.domUrl = ref;
+
           const decorator = new CompositeDecorator([
             {
               strategy: findLinkEntities,
@@ -54,7 +57,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             urlValue: '',
           };
 
-          this.focus = () => this.refs.editor.focus();
+          this.focus = () => this.domEditor.focus();
           this.onChange = (editorState) => this.setState({editorState});
           this.logState = () => {
             const content = this.state.editorState.getCurrentContent();
@@ -89,7 +92,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
               showURLInput: true,
               urlValue: url,
             }, () => {
-              setTimeout(() => this.refs.url.focus(), 0);
+              setTimeout(() => this.domUrl.focus(), 0);
             });
           }
         }
@@ -114,7 +117,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             showURLInput: false,
             urlValue: '',
           }, () => {
-            setTimeout(() => this.refs.editor.focus(), 0);
+            setTimeout(() => this.domEditor.editor.focus(), 0);
           });
         }
 
@@ -142,7 +145,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
               <div style={styles.urlInputContainer}>
                 <input
                   onChange={this.onURLChange}
-                  ref="url"
+                  ref={this.setDomUrlRef}
                   style={styles.urlInput}
                   type="text"
                   value={this.state.urlValue}
@@ -176,7 +179,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                   editorState={this.state.editorState}
                   onChange={this.onChange}
                   placeholder="Enter some text..."
-                  ref="editor"
+                  ref={this.setDomEditorRef}
                 />
               </div>
               <input

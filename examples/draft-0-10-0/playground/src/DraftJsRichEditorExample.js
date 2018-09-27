@@ -21,7 +21,8 @@ const RichTextUtils = gkx('draft_tree_data_support')
 class DraftJsRichEditorExample extends Component {
   constructor(props) {
     super(props);
-    this.focus = () => this.refs.editor.focus();
+    this.setDomEditorRef = ref => this.domEditor = ref;
+    this.focus = () => this.domEditor.focus();
     this.onChange = this.props.onChange;
     this.handleKeyCommand = this._handleKeyCommand.bind(this);
     this.mapKeyToEditorCommand = this._mapKeyToEditorCommand.bind(this);
@@ -104,7 +105,7 @@ class DraftJsRichEditorExample extends Component {
             keyBindingFn={this.mapKeyToEditorCommand}
             onChange={this.onChange}
             placeholder={this.props.placeholder}
-            ref="editor"
+            ref={this.setDomEditorRef}
             spellCheck={true}
           />
         </div>

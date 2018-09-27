@@ -42,6 +42,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         constructor(props) {
           super(props);
 
+          this.setDomEditorRef = ref => this.domEditor = ref;
+
           const decorator = new CompositeDecorator([
             {
               strategy: findLinkEntities,
@@ -71,7 +73,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             ),
           };
 
-          this.focus = () => this.refs.editor.focus();
+          this.focus = () => this.domEditor.focus();
           this.onChange = (editorState) => this.setState({editorState});
           this.logState = () => {
             const content = this.state.editorState.getCurrentContent();
@@ -89,7 +91,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 <Editor
                   editorState={this.state.editorState}
                   onChange={this.onChange}
-                  ref="editor"
+                  ref={this.setDomEditorRef}
                 />
               </div>
               <input

@@ -28,6 +28,8 @@ var {Editor, EditorState, RichUtils} = Draft;
 export default class TeXEditorExample extends React.Component {
   constructor(props) {
     super(props);
+
+    this.setDomEditorRef = ref => this.domEditor = ref;
     this.state = {
       editorState: EditorState.createWithContent(content),
       liveTeXEdits: Map(),
@@ -57,7 +59,7 @@ export default class TeXEditorExample extends React.Component {
       return null;
     };
 
-    this._focus = () => this.refs.editor.focus();
+    this._focus = () => this.domEditor.focus();
     this._onChange = (editorState) => this.setState({editorState});
 
     this._handleKeyCommand = (command, editorState) => {
@@ -101,7 +103,7 @@ export default class TeXEditorExample extends React.Component {
               onChange={this._onChange}
               placeholder="Start a document..."
               readOnly={this.state.liveTeXEdits.count()}
-              ref="editor"
+              ref={this.setDomEditorRef}
               spellCheck={true}
             />
           </div>

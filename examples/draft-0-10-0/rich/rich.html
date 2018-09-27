@@ -38,9 +38,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       class RichEditorExample extends React.Component {
         constructor(props) {
           super(props);
-          this.state = {editorState: EditorState.createEmpty()};
 
-          this.focus = () => this.refs.editor.focus();
+          this.state = {editorState: EditorState.createEmpty()};
+          this.setDomEditorRef = ref => this.domEditor = ref;
+
+          this.focus = () => this.domEditor.focus();
           this.onChange = (editorState) => this.setState({editorState});
 
           this.handleKeyCommand = this._handleKeyCommand.bind(this);
@@ -123,7 +125,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                   keyBindingFn={this.mapKeyToEditorCommand}
                   onChange={this.onChange}
                   placeholder="Tell a story..."
-                  ref="editor"
+                  ref={this.setDomEditorRef}
                   spellCheck={true}
                 />
               </div>
